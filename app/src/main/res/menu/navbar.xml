@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Camera"
+        android:id="@+id/camera"
+        android:icon="@drawable/camera"/>
+    <item android:title="Maps"
+        android:id="@+id/map"
+        android:icon="@drawable/map"/>
+    <item android:title="Food"
+        android:id="@+id/food"
+        android:icon="@drawable/food"/>
+    <item android:title="Bucket"
+        android:id="@+id/bucket"
+        android:icon="@drawable/bucket"/>
+</menu>
