@@ -23,8 +23,10 @@ class CodeScannerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCodeScannerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        // activate scanner
         codeScanner()
+
+        // ask camera permission
         setPermission()
     }
 
