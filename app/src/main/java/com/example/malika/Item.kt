@@ -6,11 +6,9 @@ import androidx.room.PrimaryKey
 import java.math.BigDecimal
 
 @Entity(tableName = "cart_table")
-data class Cart constructor(
+data class Item constructor(
     @ColumnInfo(name = "name") val name: String?,
-    @ColumnInfo(name = "description") val description: String?,
     @ColumnInfo(name = "price") val price: BigDecimal?,
-    @ColumnInfo(name = "type") val type: String?,
     @ColumnInfo(name = "amount") val amount: Int?
 ) {
     @PrimaryKey(autoGenerate = true) var id:Int = 0
