@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     >
 
     <androidx.cardview.widget.CardView
@@ -27,7 +25,7 @@
             >
 
             <TextView
-                android:id="@+id/item_name"
+                android:id="@+id/itemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nasi Goreng"
@@ -38,7 +36,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/item_price"
+                android:id="@+id/itemPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -47,10 +45,10 @@
                 android:padding="5dp"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_name" />
+                app:layout_constraintTop_toBottomOf="@+id/itemName" />
 
             <TextView
-                android:id="@+id/quantity_text"
+                android:id="@+id/quantityText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -61,11 +59,11 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_price"
+                app:layout_constraintTop_toBottomOf="@+id/itemPrice"
                 app:layout_constraintVertical_bias="0.864" />
 
             <ImageButton
-                android:id="@+id/plus_button"
+                android:id="@+id/plusButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:contentDescription="plus quantity of the item"
@@ -78,7 +76,7 @@
                 app:srcCompat="@drawable/plus" />
 
             <ImageButton
-                android:id="@+id/minus_button"
+                android:id="@+id/minusButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:contentDescription="minus quantity of the item"
@@ -91,7 +89,7 @@
                 app:srcCompat="@drawable/vector" />
 
             <TextView
-                android:id="@+id/item_quantity"
+                android:id="@+id/itemQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
@@ -99,19 +97,13 @@
                 android:textStyle="bold"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/plus_button"
+                app:layout_constraintEnd_toStartOf="@+id/plusButton"
                 app:layout_constraintHorizontal_bias="0.512"
-                app:layout_constraintStart_toEndOf="@+id/minus_button"
+                app:layout_constraintStart_toEndOf="@+id/minusButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.822" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
