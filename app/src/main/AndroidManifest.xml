@@ -18,6 +18,15 @@
         android:theme="@style/Theme.Malika"
         tools:targetApi="31">
         <activity
+            android:name=".CameraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BucketActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FoodActivity"
+            android:exported="false" />
+        <activity
             android:name=".CodeScannerActivity"
             android:exported="false" />
         <activity

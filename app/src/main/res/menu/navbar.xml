@@ -3,14 +3,14 @@
 
     <item android:title="Camera"
         android:id="@+id/camera"
-        android:icon="@drawable/camera"/>
+        android:icon="@drawable/camera_selector"/>
     <item android:title="Maps"
         android:id="@+id/map"
-        android:icon="@drawable/map"/>
+        android:icon="@drawable/map_selector"/>
     <item android:title="Food"
         android:id="@+id/food"
-        android:icon="@drawable/food"/>
+        android:icon="@drawable/food_selector"/>
     <item android:title="Bucket"
         android:id="@+id/bucket"
-        android:icon="@drawable/bucket"/>
+        android:icon="@drawable/bucket_selector"/>
 </menu>
