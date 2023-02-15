@@ -9,7 +9,7 @@ import java.math.BigDecimal
 data class Item constructor(
     @ColumnInfo(name = "name") val name: String?,
     @ColumnInfo(name = "price") val price: Int?,
-    @ColumnInfo(name = "amount") val amount: Int?
+    @ColumnInfo(name = "amount") var amount: Int?
 ) {
     @PrimaryKey(autoGenerate = true) var id:Int = 0
 }

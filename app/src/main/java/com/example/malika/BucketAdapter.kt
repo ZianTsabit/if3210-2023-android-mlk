@@ -1,11 +1,8 @@
 package com.example.malika
 
-import android.text.Layout
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.malika.databinding.ActivityMainBinding
 import com.example.malika.databinding.BucketRowBinding
 
 class BucketAdapter: RecyclerView.Adapter<BucketAdapter.CartViewHolder>() {
@@ -17,6 +14,16 @@ class BucketAdapter: RecyclerView.Adapter<BucketAdapter.CartViewHolder>() {
             itemBinding.itemName.text = item.name
             itemBinding.itemPrice.text = "Rp " + item.price.toString()
             itemBinding.itemQuantity.text = item.amount.toString()
+
+            itemBinding.plusButton.setOnClickListener {
+                item.amount = item.amount?.plus(1)
+                itemBinding.itemQuantity.text = item.amount.toString()
+            }
+
+            itemBinding.minusButton.setOnClickListener {
+                item.amount = item.amount?.minus(1)
+                itemBinding.itemQuantity.text = item.amount.toString()
+            }
         }
 
     }

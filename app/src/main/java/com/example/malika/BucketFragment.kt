@@ -1,11 +1,15 @@
 package com.example.malika
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +22,7 @@ class BucketFragment : Fragment() {
 
     private lateinit var mCartViewModel: CartViewModel
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,6 +42,16 @@ class BucketFragment : Fragment() {
             adapter.setData(item)
         } )
 
+        val totalPrice = Observer<Int> { newTotal ->
+            if(newTotal === null) {
+                binding.totalPrice.text = "Total: 0"
+            }else {
+                binding.totalPrice.text = "Total: $newTotal"
+            }
+        }
+
+        mCartViewModel.totalPrice.observe(viewLifecycleOwner, totalPrice)
+
         return binding.root
     }
 
@@ -49,10 +64,12 @@ class BucketFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnScanQR.setOnClickListener {
-            scanQRCode()
+            if (binding.totalPrice.text != "Total: 0") {
+                scanQRCode()
+            }else{
+                Toast.makeText(requireContext(), "Keranjang kamu kosong", Toast.LENGTH_LONG).show()
+            }
         }
-
-
     }
 
     private fun scanQRCode() {
@@ -64,13 +81,9 @@ class BucketFragment : Fragment() {
 
     private fun updateItemAmount(){
 
-
-
-
     }
 
     private fun deleteItem() {
-
 
     }
 }
