@@ -3,11 +3,10 @@ package com.example.malika
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.example.malika.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity() {
+    private val headerFragment = HeaderFragment()
     private val cameraFragment = CameraFragment()
     private val mapFragment = MapFragment()
     private val foodFragment = FoodFragment()
@@ -19,23 +18,36 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
-        replaceFragment(cameraFragment)
+        replaceFragment(R.id.frame_header, headerFragment)
+        replaceFragment(R.id.frame_layout, cameraFragment)
 
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.camera -> replaceFragment(cameraFragment)
-                R.id.map -> replaceFragment(mapFragment)
-                R.id.food -> replaceFragment(foodFragment)
-                R.id.bucket -> replaceFragment(bucketFragment)
+                R.id.camera -> {
+                    replaceFragment(R.id.frame_layout, cameraFragment)
+                    headerFragment.changeTitle("Twibbon")
+                }
+                R.id.map -> {
+                    replaceFragment(R.id.frame_layout, mapFragment)
+                    headerFragment.changeTitle("Cabang Restoran")
+                }
+                R.id.food -> {
+                    replaceFragment(R.id.frame_layout, foodFragment)
+                    headerFragment.changeTitle("Menu")
+                }
+                R.id.bucket -> {
+                    replaceFragment(R.id.frame_layout, bucketFragment)
+                    headerFragment.changeTitle("Keranjang")
+                }
             }
             true
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(frame: Int, fragment: Fragment) {
         if (fragment != null) {
             val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.frame_layout, fragment)
+            fragmentTransaction.replace(frame, fragment)
             fragmentTransaction.commit()
         }
     }
