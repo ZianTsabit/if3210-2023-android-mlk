@@ -8,21 +8,30 @@ import com.example.malika.databinding.BucketRowBinding
 class BucketAdapter: RecyclerView.Adapter<BucketAdapter.CartViewHolder>() {
 
     private var itemList = emptyList<Item>()
+    private lateinit var onItemUpdateListener: OnItemUpdateListener
 
-    class CartViewHolder(private val itemBinding: BucketRowBinding): RecyclerView.ViewHolder(itemBinding.root) {
+    class CartViewHolder(private val itemBinding: BucketRowBinding, private val onItemUpdateListener: OnItemUpdateListener): RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(item: Item){
             itemBinding.itemName.text = item.name
             itemBinding.itemPrice.text = "Rp " + item.price.toString()
             itemBinding.itemQuantity.text = item.amount.toString()
 
             itemBinding.plusButton.setOnClickListener {
-                item.amount = item.amount?.plus(1)
-                itemBinding.itemQuantity.text = item.amount.toString()
+                if (onItemUpdateListener != null) {
+                    val pos = adapterPosition
+                    if (pos != RecyclerView.NO_POSITION) {
+                        onItemUpdateListener.OnItemUpdated(item, pos)
+                    }
+                }
             }
 
             itemBinding.minusButton.setOnClickListener {
-                item.amount = item.amount?.minus(1)
-                itemBinding.itemQuantity.text = item.amount.toString()
+                if (onItemUpdateListener != null) {
+                    val pos = adapterPosition
+                    if (pos != RecyclerView.NO_POSITION) {
+                        onItemUpdateListener.onItemDecrease(item, pos)
+                    }
+                }
             }
         }
 
@@ -30,7 +39,7 @@ class BucketAdapter: RecyclerView.Adapter<BucketAdapter.CartViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val itemBinding = BucketRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CartViewHolder(itemBinding)
+        return CartViewHolder(itemBinding, onItemUpdateListener)
     }
 
     override fun getItemCount(): Int {
@@ -42,8 +51,9 @@ class BucketAdapter: RecyclerView.Adapter<BucketAdapter.CartViewHolder>() {
         holder.bind(currentItem)
     }
 
-    fun setData(item: List<Item>){
+    fun setData(item: List<Item>, onItemUpdateListener: OnItemUpdateListener){
         this.itemList = item
+        this.onItemUpdateListener = onItemUpdateListener
         notifyDataSetChanged()
     }
 

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.example.malika.databinding.FragmentBucketBinding
 import com.example.malika.databinding.FragmentFoodBinding
 
 
@@ -41,7 +40,7 @@ class FoodFragment : Fragment() {
         val item_price = 15000
         val quantity = 1
 
-        val item = Item(item_name, item_price, quantity)
+        val item = Item(0,item_name, item_price, quantity)
         mCartViewModel.addItem(item)
         Toast.makeText(requireContext(), "Foor/Drink successfully added!", Toast.LENGTH_LONG).show()
     }
