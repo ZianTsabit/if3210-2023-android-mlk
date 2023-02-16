@@ -1,15 +1,20 @@
 package com.example.malika
 
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 /**
  * A simple [Fragment] subclass.
@@ -17,16 +22,9 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class CameraFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -37,23 +35,58 @@ class CameraFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_camera, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CameraFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CameraFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val btnTakePicture = view?.findViewById<Button>(R.id.btn_take_picture)
+
+        btnTakePicture?.setOnClickListener {
+            if(getPermission()) {
+                openCamera()
+            } else {
+                makeReqPermission()
+            }
+        }
+    }
+
+    private fun openCamera() {
+        val camera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(camera, 100)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        val twibbonPicture = view?.findViewById<ImageView>(R.id.twibbon_picture)
+        var pic : Bitmap? = data?.getParcelableExtra<Bitmap>("data")
+        if (pic != null) {
+            twibbonPicture?.setImageBitmap(pic)
+        }
+    }
+
+    private fun getPermission(): Boolean {
+        val permission = ContextCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.CAMERA)
+        return permission == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun makeReqPermission() {
+        ActivityCompat.requestPermissions(
+            requireActivity(), arrayOf(android.Manifest.permission.CAMERA), 101
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permission: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permission, grantResults)
+        when(requestCode) {
+            101 -> {
+                if(grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(requireActivity(), "Permission Needed", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
     }
 }
