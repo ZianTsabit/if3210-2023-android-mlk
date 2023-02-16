@@ -43,11 +43,4 @@ class CartViewModel(application: Application): AndroidViewModel(application){
             repository.deleteAllItem()
         }
     }
-
-//    fun getTotalPrice() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            repository.getTotalPrice()
-//        }
-//    }
-
 }
