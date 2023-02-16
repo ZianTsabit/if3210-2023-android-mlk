@@ -1,5 +1,6 @@
 package com.example.malika
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -47,6 +48,7 @@ class CodeScannerActivity : AppCompatActivity() {
 
                 if(newStatus.body()!!.status == "SUCCESS") {
                     binding.output.text = "Berhasil"
+//                    backtoMenu()
                 }else {
                     binding.output.text = "Gagal"
                 }
@@ -129,6 +131,13 @@ class CodeScannerActivity : AppCompatActivity() {
             }
         }
     }
+
+//    private fun backtoMenu() {
+//
+//        val intent = Intent(this, FoodFragment::class.java)
+//        startActivity(intent)
+//
+//    }
 
 
 
