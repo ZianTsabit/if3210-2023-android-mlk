@@ -38,9 +38,9 @@ class CameraFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val btnTakePicture = view?.findViewById<Button>(R.id.btn_take_picture)
+        val takePicture = view?.findViewById<ImageView>(R.id.take_picture)
 
-        btnTakePicture?.setOnClickListener {
+        takePicture?.setOnClickListener {
             if(getPermission()) {
                 openCamera()
             } else {
