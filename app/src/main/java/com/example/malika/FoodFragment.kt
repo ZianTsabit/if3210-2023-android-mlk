@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.malika.databinding.FragmentFoodBinding
 
 
@@ -26,9 +27,30 @@ class FoodFragment : Fragment() {
 
         mCartViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
 
-        binding.btnAddItem.setOnClickListener{
-            addItem()
+        binding.menuRecyclerView.setHasFixedSize(true)
+
+        binding.menuRecyclerView.layoutManager = LinearLayoutManager(context)
+
+        val list = ArrayList<MenuItem>()
+
+        for (i in 0 until 3) {
+
+            list.add(MenuItem("Nasi Goreng", "Deskripsi nasi goreng yang enak", "IDR", 10000, 20000, "food"))
+
+            if(3 - 1 == i){
+                // init adapter yang telah dibuat tadi
+                val adapter = MenuAdapter(list)
+                adapter.notifyDataSetChanged()
+
+                //tampilkan data dalam recycler view
+                binding.menuRecyclerView.adapter = adapter
+            }
+
         }
+
+//        binding.btnAddItem.setOnClickListener{
+//            addItem()
+//        }
 
         return  binding.root
     }

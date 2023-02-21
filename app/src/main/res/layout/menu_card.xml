@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:cardBackgroundColor="@color/maroon_red"
+        app:cardCornerRadius="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="210dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/menuNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="23dp"
+                    android:text="Makanan A"/>
+
+                <TextView
+                    android:id="@+id/menuPriceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="Rp 50.000"/>
+
+                <TextView
+                    android:id="@+id/menuSoldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="10RB+ Terjual"/>
+
+                <TextView
+                    android:id="@+id/menuDescriptionTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="Makanan ini adalah makanan yang enak"/>
+
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|right">
+                
+                <ImageButton
+                    android:id="@+id/menuReduceButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/vector"
+                    android:contentDescription="Reduce order from cart by one"
+                    android:scaleType="center"
+                    android:scaleX="0.625"
+                    android:scaleY="0.625"
+                    android:background="@color/maroon_red"/>
+
+                <TextView
+                    android:id="@+id/menuOrderAmount"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:text="1"/>
+
+                <ImageButton
+                    android:id="@+id/menuAddButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/plus"
+                    android:contentDescription="Add one order to cart"
+                    android:scaleType="center"
+                    android:scaleX="0.625"
+                    android:scaleY="0.625"
+                    android:background="@color/maroon_red"/>
+                
+            </LinearLayout>
+            
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
