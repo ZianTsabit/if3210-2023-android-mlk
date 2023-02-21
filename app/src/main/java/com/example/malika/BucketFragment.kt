@@ -17,7 +17,6 @@ class BucketFragment : Fragment(), OnItemUpdateListener {
 
     private var _binding : FragmentBucketBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var mCartViewModel: CartViewModel
 
     @SuppressLint("SetTextI18n")
@@ -44,7 +43,7 @@ class BucketFragment : Fragment(), OnItemUpdateListener {
             if(newTotal === null) {
                 binding.totalPrice.text = "Total: 0"
             }else {
-                binding.totalPrice.text = "Total: $newTotal"
+                binding.totalPrice.text = "Total: Rp$newTotal"
             }
         }
 

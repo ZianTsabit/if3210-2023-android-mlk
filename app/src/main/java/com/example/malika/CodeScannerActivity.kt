@@ -1,28 +1,26 @@
 package com.example.malika
 
-import android.content.Intent
+import android.R
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.budiyev.android.codescanner.AutoFocusMode
-import com.budiyev.android.codescanner.CodeScanner
-import com.budiyev.android.codescanner.DecodeCallback
-import com.budiyev.android.codescanner.ErrorCallback
-import com.budiyev.android.codescanner.ScanMode
+import com.budiyev.android.codescanner.*
 import com.example.malika.databinding.ActivityCodeScannerBinding
 import retrofit2.Response
-
 
 class CodeScannerActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityCodeScannerBinding
+    private lateinit var mCartViewModel: CartViewModel
     private lateinit var viewModel: CodeScannerViewModel
+
     lateinit var codeScanner : CodeScanner
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +38,18 @@ class CodeScannerActivity : AppCompatActivity() {
         val viewModelFactory = CodeScannerViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CodeScannerViewModel::class.java)
 
+        mCartViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
+
+        val totalPrice = Observer<Int> { newTotal ->
+            if(newTotal === null) {
+                binding.totalPrice.text = "Total: 0"
+            }else {
+                binding.totalPrice.text = "Total: Rp$newTotal"
+            }
+        }
+
+        mCartViewModel.totalPrice.observe(this, totalPrice)
+
         val status = Observer<Response<PaymentStatus>> { newStatus ->
             if(newStatus.isSuccessful) {
                 Log.d("Main", newStatus.body()!!.status)
@@ -47,16 +57,17 @@ class CodeScannerActivity : AppCompatActivity() {
                 Log.d("Main", newStatus.message())
 
                 if(newStatus.body()!!.status == "SUCCESS") {
-                    binding.output.text = "Berhasil"
-//                    backtoMenu()
+                    binding.status.text = "Berhasil"
+                    binding.status2.text = "Sudah dibayar"
                 }else {
-                    binding.output.text = "Gagal"
+                    binding.status.text = "Gagal"
+                    binding.status2.text = "Belum dibayar"
                 }
             }else {
-                binding.output.text = "Gagal"
+                binding.status.text = "Gagal"
+                binding.status2.text = "Belum dibayar"
             }
         }
-
         viewModel.currentPaymentStatus.observe(this, status)
     }
 
