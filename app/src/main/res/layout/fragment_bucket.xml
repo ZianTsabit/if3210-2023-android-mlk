@@ -13,9 +13,9 @@
         android:id="@+id/cartView"
         android:layout_width="415dp"
         android:layout_height="524dp"
-        android:layout_marginTop="72dp"
         android:background="@color/F7E1C9"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,14 +23,14 @@
         android:id="@+id/btn_scanQR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bayar"
         android:backgroundTint="@color/maroon_red"
+        android:text="Bayar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.86"
+        app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cartView"
-        app:layout_constraintVertical_bias="0.216" />
+        app:layout_constraintVertical_bias="0.54" />
 
     <TextView
         android:id="@+id/totalPrice"
@@ -43,9 +43,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_scanQR"
-        app:layout_constraintHorizontal_bias="0.385"
+        app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cartView"
-        app:layout_constraintVertical_bias="0.075" />
+        app:layout_constraintVertical_bias="0.378" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
