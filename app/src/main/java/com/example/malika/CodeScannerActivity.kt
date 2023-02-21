@@ -1,6 +1,7 @@
 package com.example.malika
 
 import android.R
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -13,7 +14,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.budiyev.android.codescanner.*
 import com.example.malika.databinding.ActivityCodeScannerBinding
+import kotlinx.coroutines.delay
 import retrofit2.Response
+import java.util.*
 
 class CodeScannerActivity : AppCompatActivity() {
 
@@ -52,20 +55,32 @@ class CodeScannerActivity : AppCompatActivity() {
 
         val status = Observer<Response<PaymentStatus>> { newStatus ->
             if(newStatus.isSuccessful) {
-                Log.d("Main", newStatus.body()!!.status)
-                Log.d("Main", newStatus.code().toString())
-                Log.d("Main", newStatus.message())
 
                 if(newStatus.body()!!.status == "SUCCESS") {
                     binding.status.text = "Berhasil"
                     binding.status2.text = "Sudah dibayar"
+                    binding.imageView.setImageResource(com.example.malika.R.drawable.baseline_check_circle_24)
+
+                    val task = object : TimerTask() {
+                        override fun run() {
+                            // code to be executed after the delay
+                            val intent = Intent(this@CodeScannerActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            mCartViewModel.deleteAllItem()
+                        }
+                    }
+
+                    Timer().schedule(task,5000)
+
                 }else {
                     binding.status.text = "Gagal"
                     binding.status2.text = "Belum dibayar"
+                    binding.imageView.setImageResource(com.example.malika.R.drawable.baseline_cancel_24)
                 }
             }else {
                 binding.status.text = "Gagal"
                 binding.status2.text = "Belum dibayar"
+                binding.imageView.setImageResource(com.example.malika.R.drawable.baseline_cancel_24)
             }
         }
         viewModel.currentPaymentStatus.observe(this, status)
@@ -142,15 +157,4 @@ class CodeScannerActivity : AppCompatActivity() {
             }
         }
     }
-
-//    private fun backtoMenu() {
-//
-//        val intent = Intent(this, FoodFragment::class.java)
-//        startActivity(intent)
-//
-//    }
-
-
-
-
 }

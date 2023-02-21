@@ -13,9 +13,9 @@
         android:id="@+id/cartView"
         android:layout_width="415dp"
         android:layout_height="524dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="72dp"
+        android:background="@color/F7E1C9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,6 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bayar"
+        android:backgroundTint="@color/maroon_red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.86"
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="27dp"
         android:text="Total: 0"
+        android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
