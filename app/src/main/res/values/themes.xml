@@ -1,4 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="SearchAutoCompleteTextView" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:editTextColor">@color/grey</item>
+        <item name="android:textColorHint">@color/grey</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="Theme.Malika" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -12,5 +19,6 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
     </style>
 </resources>

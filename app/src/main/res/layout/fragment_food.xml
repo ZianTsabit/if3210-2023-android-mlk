@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/F7E1C9"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             app:queryHint="Cari Makanan atau Minuman"
             app:iconifiedByDefault="false"/>
 
