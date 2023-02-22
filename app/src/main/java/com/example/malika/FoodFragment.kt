@@ -31,29 +31,35 @@ class FoodFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentFoodBinding.inflate(inflater, container, false)
 
-
         mCartViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
 
-        binding.menuRecyclerView.setHasFixedSize(true)
+        binding.foodRecyclerView.setHasFixedSize(true)
+        binding.foodRecyclerView.isNestedScrollingEnabled = false
+        binding.foodRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        binding.menuRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.drinkRecyclerView.setHasFixedSize(true)
+        binding.drinkRecyclerView.isNestedScrollingEnabled = false
+        binding.drinkRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val list = ArrayList<MenuItem>()
+        val list = arrayListOf<MenuItem>(
+            MenuItem("Nasi Goreng", "Deskripsi nasi goreng yang enak", "IDR", 10000, 20000, "Food"),
+            MenuItem("Nasi Goreng 2", "Deskripsi nasi goreng yang sangat enak sekali", "IDR", 10000, 20000, "Food"),
+            MenuItem("Es Teh Manis", "Deskripsi teh manis yang bikin diabetes", "IDR", 10000, 20000, "Drink"),
+            MenuItem("Es Teh Tawar", "Deskripsi teh tawar yang gak bikin diabetes", "IDR", 10000, 20000, "Drink"),
+            MenuItem("Indomie Goreng", "Indomie Seleraku", "IDR", 10000, 20000, "Food"),
+            MenuItem("Es Teh Kopi", "Deskripsi es teh kopi yang enak", "IDR", 10000, 20000, "Drink"),
+        )
 
-        for (i in 0 until 3) {
+        var foodList = list.filter { s -> s.type == "Food" } as ArrayList<MenuItem>
+        var drinkList  = list.filter { s -> s.type == "Drink" } as ArrayList<MenuItem>
 
-            list.add(MenuItem("Nasi Goreng", "Deskripsi nasi goreng yang enak", "IDR", 10000, 20000, "food"))
+        var foodAdapter = MenuAdapter(foodList)
+        foodAdapter.notifyDataSetChanged()
+        binding.foodRecyclerView.adapter = foodAdapter
 
-            if(3 - 1 == i){
-                // init adapter yang telah dibuat tadi
-                val adapter = MenuAdapter(list)
-                adapter.notifyDataSetChanged()
-
-                //tampilkan data dalam recycler view
-                binding.menuRecyclerView.adapter = adapter
-            }
-
-        }
+        var drinkAdapter = MenuAdapter(drinkList)
+        foodAdapter.notifyDataSetChanged()
+        binding.drinkRecyclerView.adapter = drinkAdapter
 
 //        binding.btnAddItem.setOnClickListener{
 //            addItem()
