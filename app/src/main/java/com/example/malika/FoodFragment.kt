@@ -1,18 +1,24 @@
 package com.example.malika
 
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.getSystemService
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.malika.databinding.FragmentFoodBinding
 
 
 class FoodFragment : Fragment() {
-
     private lateinit var mCartViewModel: CartViewModel
 
     private var _binding : FragmentFoodBinding? = null
@@ -24,6 +30,7 @@ class FoodFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentFoodBinding.inflate(inflater, container, false)
+
 
         mCartViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
 
@@ -54,7 +61,6 @@ class FoodFragment : Fragment() {
 
         return  binding.root
     }
-
 
     private fun addItem() {
 

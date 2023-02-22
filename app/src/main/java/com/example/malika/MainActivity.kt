@@ -39,18 +39,23 @@ class MainActivity : AppCompatActivity() {
                 R.id.camera -> {
                     replaceFragment(R.id.frame_layout, cameraFragment)
                     headerFragment.changeTitle("Twibbon")
+                    headerFragment.hideTemperature()
                 }
                 R.id.map -> {
                     replaceFragment(R.id.frame_layout, mapFragment)
                     headerFragment.changeTitle("Cabang Restoran")
+                    headerFragment.hideTemperature()
                 }
                 R.id.food -> {
                     replaceFragment(R.id.frame_layout, foodFragment)
                     headerFragment.changeTitle("Menu")
+                    headerFragment.setTemperature("28°C")
+                    headerFragment.unhideTemperature()
                 }
                 R.id.bucket -> {
                     replaceFragment(R.id.frame_layout, bucketFragment)
                     headerFragment.changeTitle("Keranjang")
+                    headerFragment.hideTemperature()
                 }
             }
             true

@@ -34,4 +34,22 @@ class HeaderFragment : Fragment() {
         var headerView = view?.findViewById<TextView>(R.id.header_view)
         headerView?.text = title
     }
+
+    public fun hideTemperature() {
+        var temperatureTextView = view?.findViewById<TextView>(R.id.temperatureTextView)
+        temperatureTextView?.visibility = View.INVISIBLE
+    }
+
+    public fun unhideTemperature() {
+        var temperatureTextView = view?.findViewById<TextView>(R.id.temperatureTextView)
+        temperatureTextView?.visibility = View.VISIBLE
+    }
+
+    public fun setTemperature(temperature: String) {
+        var temperatureTextView = view?.findViewById<TextView>(R.id.temperatureTextView)
+        var fillerTemperatureTextView = view?.findViewById<TextView>(R.id.fillerTemperatureTextView)
+
+        fillerTemperatureTextView?.text = temperature
+        temperatureTextView?.text = temperature
+    }
 }
