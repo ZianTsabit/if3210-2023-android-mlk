@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Malika" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimary">@color/maroon_red</item>
         <item name="colorPrimaryVariant">@color/ECE1D4</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
