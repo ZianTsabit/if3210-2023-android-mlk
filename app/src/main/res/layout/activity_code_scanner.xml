@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/F7E1C9"
     tools:context=".CodeScannerActivity"
     >
 
@@ -44,8 +45,7 @@
         app:layout_constraintHorizontal_bias="0.248"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/totalPrice"
-        app:layout_constraintVertical_bias="0.0"
-        />
+        app:layout_constraintVertical_bias="0.32" />
 
     <TextView
         android:id="@+id/status"
@@ -59,7 +59,7 @@
         app:layout_constraintHorizontal_bias="0.408"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/totalPrice"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.238" />
 
     <TextView
         android:id="@+id/status2"
@@ -68,7 +68,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.365"
+        app:layout_constraintHorizontal_bias="0.366"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/status"
         app:layout_constraintVertical_bias="0.0" />
