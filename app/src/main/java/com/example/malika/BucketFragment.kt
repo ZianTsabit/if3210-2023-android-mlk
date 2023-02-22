@@ -49,6 +49,8 @@ class BucketFragment : Fragment(), OnItemUpdateListener {
 
         mCartViewModel.totalPrice.observe(viewLifecycleOwner, totalPrice)
 
+//        addItem()
+
         return binding.root
     }
 
@@ -102,5 +104,16 @@ class BucketFragment : Fragment(), OnItemUpdateListener {
         }
 
     }
+//    private fun addItem() {
+//
+//        val item_name = "Ayam Bakar"
+//        val item_price = 15000
+//        val quantity = 1
+//
+//        val item = Item(0,item_name, item_price, quantity)
+//        mCartViewModel.addItem(item)
+//        Toast.makeText(requireContext(), "Foor/Drink successfully added!", Toast.LENGTH_LONG).show()
+//    }
+
 
 }
