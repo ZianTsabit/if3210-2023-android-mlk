@@ -1,10 +1,13 @@
 package com.example.malika
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +16,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.malika.databinding.FragmentCameraBinding
 
 /**
  * A simple [Fragment] subclass.
@@ -22,7 +30,9 @@ import androidx.core.content.ContextCompat
  * create an instance of this fragment.
  */
 class CameraFragment : Fragment() {
-
+    private lateinit var binding: FragmentCameraBinding
+    private var imageCapture: ImageCapture? = null
+    private var cameraStarted: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -31,62 +41,90 @@ class CameraFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_camera, container, false)
-    }
+        binding = FragmentCameraBinding.inflate(inflater, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val takePicture = view?.findViewById<ImageView>(R.id.take_picture)
-
-        takePicture?.setOnClickListener {
-            if(getPermission()) {
-                openCamera()
+        binding.takePicture.setOnClickListener {
+            if (allPermissionGranted()) {
+                takePhoto()
             } else {
-                makeReqPermission()
+                ActivityCompat.requestPermissions(
+                    requireActivity(), mutableListOf (
+                        Manifest.permission.CAMERA
+                    ).apply {
+                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                            add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        }
+                    }.toTypedArray(), 10
+                )
             }
         }
+        return binding.root
     }
 
-    private fun openCamera() {
-        val camera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(camera, 100)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        val twibbonPicture = view?.findViewById<ImageView>(R.id.twibbon_picture)
-        var pic : Bitmap? = data?.getParcelableExtra<Bitmap>("data")
-        if (pic != null) {
-            twibbonPicture?.setImageBitmap(pic)
+    private fun takePhoto() {
+        if (cameraStarted) {
+            Toast.makeText(requireContext(), "Photo Taken", Toast.LENGTH_SHORT).show()
+            stopCamera()
+        } else {
+            startCamera()
         }
     }
 
-    private fun getPermission(): Boolean {
-        val permission = ContextCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.CAMERA)
-        return permission == PackageManager.PERMISSION_GRANTED
+    private fun stopCamera() {
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+        cameraProviderFuture.addListener({
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+            cameraProvider.unbindAll()
+            cameraStarted = false
+        }, ContextCompat.getMainExecutor(requireContext()))
     }
 
-    private fun makeReqPermission() {
-        ActivityCompat.requestPermissions(
-            requireActivity(), arrayOf(android.Manifest.permission.CAMERA), 101
-        )
+    private fun startCamera() {
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+        cameraProviderFuture.addListener({
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+            val preview = Preview.Builder().build().also { mPreview ->
+                mPreview.setSurfaceProvider(
+                    binding.twibbonPicture.surfaceProvider
+                )
+            }
+            imageCapture = ImageCapture.Builder().build()
+            val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+            try {
+                cameraProvider.unbindAll()
+                cameraProvider.bindToLifecycle(
+                    this, cameraSelector, preview, imageCapture
+                )
+                cameraStarted = true
+            } catch (e: Exception) {
+                Log.d("Malika", "Start Camera Fail:", e)
+            }
+        }, ContextCompat.getMainExecutor(requireContext()))
     }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permission: Array<out String>,
+        permissions: Array<String>,
         grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permission, grantResults)
-        when(requestCode) {
-            101 -> {
-                if(grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(requireActivity(), "Permission Needed", Toast.LENGTH_SHORT).show()
-                }
+        if (requestCode == 10) {
+            if (allPermissionGranted()) {
+                takePhoto()
+            }
+            else {
+                Toast.makeText(requireContext(), "Permissions not granted", Toast.LENGTH_SHORT).show()
             }
         }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    private fun allPermissionGranted() = mutableListOf (
+        Manifest.permission.CAMERA
+    ).apply {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+    }.toTypedArray().all {
+        ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
     }
 }
