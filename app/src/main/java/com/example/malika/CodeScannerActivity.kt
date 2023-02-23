@@ -4,6 +4,7 @@ import android.R
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -23,6 +24,7 @@ class CodeScannerActivity : AppCompatActivity() {
     lateinit var binding : ActivityCodeScannerBinding
     private lateinit var mCartViewModel: CartViewModel
     private lateinit var viewModel: CodeScannerViewModel
+    private val foodFragment = FoodFragment()
 
     lateinit var codeScanner : CodeScanner
 
@@ -54,8 +56,8 @@ class CodeScannerActivity : AppCompatActivity() {
         mCartViewModel.totalPrice.observe(this, totalPrice)
 
         val status = Observer<Response<PaymentStatus>> { newStatus ->
-            if(newStatus.isSuccessful) {
 
+            if(newStatus.isSuccessful) {
                 if(newStatus.body()!!.status == "SUCCESS") {
                     binding.status.text = "Berhasil"
                     binding.status2.text = "Sudah dibayar"
@@ -82,7 +84,9 @@ class CodeScannerActivity : AppCompatActivity() {
                 binding.status2.text = "Belum dibayar"
                 binding.imageView.setImageResource(com.example.malika.R.drawable.baseline_cancel_24)
             }
+
         }
+
         viewModel.currentPaymentStatus.observe(this, status)
     }
 
@@ -94,15 +98,13 @@ class CodeScannerActivity : AppCompatActivity() {
             formats = CodeScanner.ALL_FORMATS
 
             autoFocusMode = AutoFocusMode.SAFE
-            scanMode = ScanMode.CONTINUOUS
+            scanMode = ScanMode.SINGLE
             isAutoFocusEnabled = true
             isFlashEnabled = false
 
             decodeCallback = DecodeCallback {
                 runOnUiThread {
-
                     viewModel.getPaymentStatus(it.text).toString()
-
                 }
             }
 

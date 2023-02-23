@@ -1,5 +1,6 @@
 package com.example.malika
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,8 +13,12 @@ class CodeScannerViewModel(private val retrofitRepository: RetrofitRepository): 
 
     fun getPaymentStatus(transactionId: String) {
         viewModelScope.launch {
-            val response = retrofitRepository.getPaymentStatus(transactionId)
-            currentPaymentStatus.value = response
+           try {
+               val response = retrofitRepository.getPaymentStatus(transactionId)
+               currentPaymentStatus.value = response
+           }catch (e: Exception){
+               Log.e("PAYMENT STATUS", "Connection failed")
+           }
         }
     }
 }
