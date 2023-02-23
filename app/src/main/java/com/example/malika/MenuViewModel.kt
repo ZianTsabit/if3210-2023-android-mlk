@@ -12,7 +12,6 @@ class MenuViewModel(
 ) : AndroidViewModel(application) {
     private val retrofitRepository: RetrofitRepository = RetrofitRepository()
     private val cartRepository: CartRepository
-    private val readAllItem: LiveData<List<Item>>
 
     private var _wholeFoodList = ArrayList<MenuItem>()
     private var _wholeDrinkList = ArrayList<MenuItem>()
@@ -29,7 +28,6 @@ class MenuViewModel(
     init {
         val cartDao = AppDatabase.buildDatabase(application).getCartDao()
         cartRepository = CartRepository(cartDao)
-        readAllItem = cartRepository.getAllItem
     }
 
     fun getMenu() {

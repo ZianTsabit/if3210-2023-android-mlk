@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private val foodFragment = FoodFragment()
     private val bucketFragment = BucketFragment()
 
+    private lateinit var viewModel: MainViewModel
+
     private lateinit var sensorManager: SensorManager
     private var temperature: Sensor? = null
 
@@ -39,6 +42,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContentView(R.layout.activity_main)
+
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         // Get an instance of the sensor service, and use that to get an instance of
         // a particular sensor.
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -53,24 +59,40 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
+        if (viewModel.currentPage == PageFragmentEnum.Twibbon) {
+            replaceFragment(R.id.frame_layout, cameraFragment)
+
+        } else if (viewModel.currentPage == PageFragmentEnum.Branch) {
+            replaceFragment(R.id.frame_layout, mapFragment)
+
+        } else if (viewModel.currentPage == PageFragmentEnum.Menu) {
+            replaceFragment(R.id.frame_layout, foodFragment)
+
+        } else if (viewModel.currentPage == PageFragmentEnum.Cart) {
+            replaceFragment(R.id.frame_layout, bucketFragment)
+
+        }
+
         replaceFragment(R.id.frame_header, headerFragment)
-        replaceFragment(R.id.frame_layout, cameraFragment)
 
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.camera -> {
                     replaceFragment(R.id.frame_layout, cameraFragment)
+                    viewModel.currentPage = PageFragmentEnum.Twibbon
                     headerFragment.changeTitle("Twibbon")
                     headerFragment.hideTemperature()
                 }
                 R.id.map -> {
                     replaceFragment(R.id.frame_layout, mapFragment)
+                    viewModel.currentPage = PageFragmentEnum.Branch
                     headerFragment.changeTitle("Cabang Restoran")
                     headerFragment.hideTemperature()
                 }
                 R.id.food -> {
                     replaceFragment(R.id.frame_layout, foodFragment)
                     headerFragment.changeTitle("Menu")
+                    viewModel.currentPage = PageFragmentEnum.Menu
 
                     if (temperature != null) {
                         headerFragment.unhideTemperature()
@@ -78,11 +100,36 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 }
                 R.id.bucket -> {
                     replaceFragment(R.id.frame_layout, bucketFragment)
+                    viewModel.currentPage = PageFragmentEnum.Cart
                     headerFragment.changeTitle("Keranjang")
                     headerFragment.hideTemperature()
                 }
             }
             true
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (viewModel.currentPage == PageFragmentEnum.Twibbon) {
+            headerFragment.changeTitle("Twibbon")
+            headerFragment.hideTemperature()
+
+        } else if (viewModel.currentPage == PageFragmentEnum.Branch) {
+            headerFragment.changeTitle("Cabang Restoran")
+            headerFragment.hideTemperature()
+
+        } else if (viewModel.currentPage == PageFragmentEnum.Menu) {
+            headerFragment.changeTitle("Menu")
+            if (temperature != null) {
+                headerFragment.unhideTemperature()
+            }
+
+        } else if (viewModel.currentPage == PageFragmentEnum.Cart) {
+            headerFragment.changeTitle("Keranjang")
+            headerFragment.hideTemperature()
+
         }
     }
 
