@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.malika.databinding.FragmentMapBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +23,9 @@ class MapFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var _binding : FragmentMapBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,7 +39,29 @@ class MapFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        _binding = FragmentMapBinding.inflate(inflater, container, false)
+
+        binding.branchRecyclerView.setHasFixedSize(true)
+        binding.branchRecyclerView.layoutManager = LinearLayoutManager(context)
+
+        val list = arrayListOf<BranchItem>(
+            BranchItem("Anchorage", "Swiss Chard", "12022 Town Park Circle", "Lady Destini Bechtelar", "397-110-6582", -149.5778193, 61.32927710000001),
+            BranchItem("Anchorage", "Swiss Chard", "12022 Town Park Circle", "Lady Destini Bechtelar", "397-110-6582", -149.5778193, 61.32927710000001),
+            BranchItem("Anchorage", "Swiss Chard", "12022 Town Park Circle", "Lady Destini Bechtelar", "397-110-6582", -149.5778193, 61.32927710000001),
+            BranchItem("Anchorage", "Swiss Chard", "12022 Town Park Circle", "Lady Destini Bechtelar", "397-110-6582", -149.5778193, 61.32927710000001),
+            BranchItem("Anchorage", "Swiss Chard", "12022 Town Park Circle", "Lady Destini Bechtelar", "397-110-6582", -149.5778193, 61.32927710000001),
+            BranchItem("Anchorage", "Swiss Chard", "12022 Town Park Circle", "Lady Destini Bechtelar", "397-110-6582", -149.5778193, 61.32927710000001),
+        )
+
+        var adapter = BranchAdapter(list)
+        adapter.notifyDataSetChanged()
+        binding.branchRecyclerView.adapter = adapter
+
+//        binding.btnAddItem.setOnClickListener{
+//            addItem()
+//        }
+
+        return  binding.root
     }
 
     companion object {

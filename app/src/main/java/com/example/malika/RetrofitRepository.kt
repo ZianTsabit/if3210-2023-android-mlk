@@ -9,4 +9,7 @@ class RetrofitRepository {
         return RetrofitInstance.api.getPaymentStatus(transactionId)
     }
 
+    suspend fun getMenu(): Response<MenuResponse> {
+        return RetrofitInstance.api.getMenu()
+    }
 }

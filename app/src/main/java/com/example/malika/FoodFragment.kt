@@ -19,6 +19,7 @@ import com.example.malika.databinding.FragmentFoodBinding
 
 
 class FoodFragment : Fragment() {
+    private lateinit var viewModel: MenuViewModel
     private lateinit var mCartViewModel: CartViewModel
 
     private var _binding : FragmentFoodBinding? = null
@@ -31,6 +32,7 @@ class FoodFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentFoodBinding.inflate(inflater, container, false)
 
+        viewModel = ViewModelProvider(this).get(MenuViewModel::class.java)
         mCartViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
 
         binding.foodRecyclerView.setHasFixedSize(true)
@@ -49,6 +51,8 @@ class FoodFragment : Fragment() {
             MenuItem("Indomie Goreng", "Indomie Seleraku", "IDR", 10000, 20000, "Food"),
             MenuItem("Es Teh Kopi", "Deskripsi es teh kopi yang enak", "IDR", 10000, 20000, "Drink"),
         )
+
+//        viewModel.getMenu()
 
         var foodList = list.filter { s -> s.type == "Food" } as ArrayList<MenuItem>
         var drinkList  = list.filter { s -> s.type == "Drink" } as ArrayList<MenuItem>
