@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.malika.databinding.FragmentMapBinding
 
@@ -22,6 +24,8 @@ class MapFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private lateinit var viewModel: BranchViewModel
 
     private var _binding : FragmentMapBinding? = null
     private val binding get() = _binding!!
@@ -41,22 +45,23 @@ class MapFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentMapBinding.inflate(inflater, container, false)
 
+        viewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
+
         binding.branchRecyclerView.setHasFixedSize(true)
         binding.branchRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val list = arrayListOf<BranchItem>(
-            BranchItem("Anchorage", "Swiss Chard", "12022 Town Park Circle", "Lady Destini Bechtelar", "397-110-6582", -149.5778193, 61.32927710000001),
-            BranchItem("Anchorage", "Swiss Chard", "12022 Town Park Circle", "Lady Destini Bechtelar", "397-110-6582", -149.5778193, 61.32927710000001),
-            BranchItem("Anchorage", "Swiss Chard", "12022 Town Park Circle", "Lady Destini Bechtelar", "397-110-6582", -149.5778193, 61.32927710000001),
-            BranchItem("Anchorage", "Swiss Chard", "12022 Town Park Circle", "Lady Destini Bechtelar", "397-110-6582", -149.5778193, 61.32927710000001),
-            BranchItem("Anchorage", "Swiss Chard", "12022 Town Park Circle", "Lady Destini Bechtelar", "397-110-6582", -149.5778193, 61.32927710000001),
-            BranchItem("Anchorage", "Swiss Chard", "12022 Town Park Circle", "Lady Destini Bechtelar", "397-110-6582", -149.5778193, 61.32927710000001),
-        )
-
-        requireActivity()
-        var adapter = BranchAdapter(list, requireContext())
+        var adapter = BranchAdapter(ArrayList(), requireContext())
         adapter.notifyDataSetChanged()
         binding.branchRecyclerView.adapter = adapter
+
+        val branchListUpdateObserver: Observer<ArrayList<BranchItem>> =
+            Observer<ArrayList<BranchItem>> { branchList ->
+                adapter.updateBranchList( branchList)
+            }
+
+        viewModel.branchList.observe(viewLifecycleOwner, branchListUpdateObserver)
+
+        viewModel.getBranch()
 
 //        binding.btnAddItem.setOnClickListener{
 //            addItem()

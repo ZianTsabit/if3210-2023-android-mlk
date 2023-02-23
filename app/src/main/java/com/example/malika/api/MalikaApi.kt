@@ -1,5 +1,6 @@
 package com.example.malika.api
 
+import com.example.malika.BranchResponse
 import com.example.malika.MenuResponse
 import com.example.malika.PaymentStatus
 import retrofit2.Response
@@ -16,6 +17,9 @@ interface MalikaApi {
 
     @GET("/v1/menu")
     suspend fun getMenu(): Response<MenuResponse>
+
+    @GET("/v1/branch")
+    suspend fun getBranch(): Response<BranchResponse>
 
 
 }

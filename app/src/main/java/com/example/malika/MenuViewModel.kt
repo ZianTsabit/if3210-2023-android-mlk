@@ -10,10 +10,6 @@ import kotlinx.coroutines.launch
 class MenuViewModel : ViewModel() {
     private val retrofitRepository: RetrofitRepository = RetrofitRepository()
 
-    private val _currentWordCount = MutableLiveData(0)
-    val currentWordCount: LiveData<Int>
-        get() = _currentWordCount
-
     private val _foodList = MutableLiveData(ArrayList<MenuItem>())
     val foodList: LiveData<ArrayList<MenuItem>>
         get() = _foodList

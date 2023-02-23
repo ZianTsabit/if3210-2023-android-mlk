@@ -12,4 +12,8 @@ class RetrofitRepository {
     suspend fun getMenu(): Response<MenuResponse> {
         return RetrofitInstance.api.getMenu()
     }
+
+    suspend fun getBranch(): Response<BranchResponse> {
+        return RetrofitInstance.api.getBranch()
+    }
 }

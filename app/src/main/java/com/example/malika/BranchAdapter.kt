@@ -12,7 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class BranchAdapter(
-    private val list: ArrayList<BranchItem>,
+    private var list: ArrayList<BranchItem>,
     private val context: Context,
 ) : RecyclerView.Adapter<BranchAdapter.BranchHolder>() {
 
@@ -53,5 +53,11 @@ class BranchAdapter(
 
     override fun getItemCount(): Int {
         return list!!.size
+    }
+
+    fun updateBranchList(branchList: ArrayList<BranchItem>) {
+        list.clear()
+        list = branchList
+        notifyDataSetChanged()
     }
 }
