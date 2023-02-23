@@ -1,18 +1,12 @@
 package com.example.malika
 
-import android.content.Context
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.getSystemService
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.malika.databinding.FragmentFoodBinding
@@ -43,27 +37,28 @@ class FoodFragment : Fragment() {
         binding.drinkRecyclerView.isNestedScrollingEnabled = false
         binding.drinkRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val list = arrayListOf<MenuItem>(
-            MenuItem("Nasi Goreng", "Deskripsi nasi goreng yang enak", "IDR", 10000, 20000, "Food"),
-            MenuItem("Nasi Goreng 2", "Deskripsi nasi goreng yang sangat enak sekali", "IDR", 10000, 20000, "Food"),
-            MenuItem("Es Teh Manis", "Deskripsi teh manis yang bikin diabetes", "IDR", 10000, 20000, "Drink"),
-            MenuItem("Es Teh Tawar", "Deskripsi teh tawar yang gak bikin diabetes", "IDR", 10000, 20000, "Drink"),
-            MenuItem("Indomie Goreng", "Indomie Seleraku", "IDR", 10000, 20000, "Food"),
-            MenuItem("Es Teh Kopi", "Deskripsi es teh kopi yang enak", "IDR", 10000, 20000, "Drink"),
-        )
-
-//        viewModel.getMenu()
-
-        var foodList = list.filter { s -> s.type == "Food" } as ArrayList<MenuItem>
-        var drinkList  = list.filter { s -> s.type == "Drink" } as ArrayList<MenuItem>
-
-        var foodAdapter = MenuAdapter(foodList)
+        var foodAdapter = MenuAdapter(ArrayList<MenuItem>())
         foodAdapter.notifyDataSetChanged()
         binding.foodRecyclerView.adapter = foodAdapter
 
-        var drinkAdapter = MenuAdapter(drinkList)
+        var drinkAdapter = MenuAdapter(ArrayList<MenuItem>())
         foodAdapter.notifyDataSetChanged()
         binding.drinkRecyclerView.adapter = drinkAdapter
+
+        val foodListUpdateObserver: Observer<ArrayList<MenuItem>> =
+            Observer<ArrayList<MenuItem>> { foodList ->
+                foodAdapter.updateMenuList(foodList)
+            }
+
+        val drinkListUpdateObserver: Observer<ArrayList<MenuItem>> =
+            Observer<ArrayList<MenuItem>> { drinkList ->
+                drinkAdapter.updateMenuList(drinkList)
+            }
+
+        viewModel.foodList.observe(viewLifecycleOwner, foodListUpdateObserver)
+        viewModel.drinkList.observe(viewLifecycleOwner, drinkListUpdateObserver)
+
+        viewModel.getMenu()
 
 //        binding.btnAddItem.setOnClickListener{
 //            addItem()

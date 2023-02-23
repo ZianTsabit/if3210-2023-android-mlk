@@ -4,12 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
 
 class MenuAdapter(
-    private val list: ArrayList<MenuItem>
+    private var list: ArrayList<MenuItem>
 ) : RecyclerView.Adapter<MenuAdapter.MenuHolder>() {
 
     class MenuHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -43,5 +41,11 @@ class MenuAdapter(
 
     override fun getItemCount(): Int {
         return list!!.size
+    }
+
+    fun updateMenuList(menuList: ArrayList<MenuItem>) {
+        list.clear()
+        list = menuList
+        notifyDataSetChanged()
     }
 }
