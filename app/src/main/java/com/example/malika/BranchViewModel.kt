@@ -16,14 +16,19 @@ class BranchViewModel : ViewModel() {
 
     fun getBranch() {
         viewModelScope.launch {
-            val response = retrofitRepository.getBranch()
-            if (response.isSuccessful) {
-                val list = response.body()?.data
-                _branchList.value = list as ArrayList<BranchItem>
-                Log.i("BRANCH", "Get branch successful")
-            } else {
-                Log.e("ERROR", "Response failed")
+            try {
+                val response = retrofitRepository.getBranch()
+                if (response.isSuccessful) {
+                    val list = response.body()?.data
+                    _branchList.value = list as ArrayList<BranchItem>
+                    Log.i("BRANCH", "Get branch successful")
+                } else {
+                    Log.e("BRANCH", "Response failed")
+                }
+            } catch (e: Exception) {
+                Log.e("BRANCH", "Connection failed")
             }
+
         }
     }
 }

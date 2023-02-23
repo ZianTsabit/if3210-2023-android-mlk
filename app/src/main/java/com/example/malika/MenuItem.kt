@@ -19,5 +19,7 @@ data class MenuItem(
     val sold: Int,
 
     @field:SerializedName("type")
-    val type: String
+    val type: String,
+
+    val amount: Int = 0
 )

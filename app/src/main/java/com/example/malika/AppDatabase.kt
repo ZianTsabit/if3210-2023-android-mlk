@@ -26,7 +26,9 @@ abstract class AppDatabase : RoomDatabase() {
             context.applicationContext,
             AppDatabase::class.java,
             "malika-database"
-        ).build()
+        )
+            .allowMainThreadQueries()
+            .build()
 
     }
 }

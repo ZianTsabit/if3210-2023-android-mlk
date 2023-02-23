@@ -1,14 +1,18 @@
 package com.example.malika
 
+import android.annotation.SuppressLint
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 
-class MenuViewModel : ViewModel() {
+@SuppressLint("CheckResult")
+class MenuViewModel(
+    application: Application
+) : AndroidViewModel(application) {
     private val retrofitRepository: RetrofitRepository = RetrofitRepository()
+    private val cartRepository: CartRepository
+    private val readAllItem: LiveData<List<Item>>
 
     private var _wholeFoodList = ArrayList<MenuItem>()
     private var _wholeDrinkList = ArrayList<MenuItem>()
@@ -22,23 +26,34 @@ class MenuViewModel : ViewModel() {
         get() = _drinkList
 
     var searchQuery : String = ""
+    init {
+        val cartDao = AppDatabase.buildDatabase(application).getCartDao()
+        cartRepository = CartRepository(cartDao)
+        readAllItem = cartRepository.getAllItem
+    }
 
     fun getMenu() {
         viewModelScope.launch {
-            val response = retrofitRepository.getMenu()
-            if (response.isSuccessful) {
-                val list = response.body()?.data
+            try {
+                val response = retrofitRepository.getMenu()
+                if (response.isSuccessful) {
+                    val list = response.body()?.data
 
-                _wholeFoodList = list?.filter { s -> s.type == "Food" } as ArrayList<MenuItem>
-                _wholeDrinkList = list?.filter { s -> s.type == "Drink" } as ArrayList<MenuItem>
+                    _wholeFoodList = list?.filter { s -> s.type == "Food" } as ArrayList<MenuItem>
+                    _wholeDrinkList = list?.filter { s -> s.type == "Drink" } as ArrayList<MenuItem>
 
-                _foodList.value = list?.filter { s -> s.type == "Food" } as ArrayList<MenuItem>
-                _drinkList.value  = list?.filter { s -> s.type == "Drink" } as ArrayList<MenuItem>
+                    val itemList = cartRepository.getAllItemSynchronous()
 
-                Log.i("MENU", "Get menu successful")
-            } else {
-                Log.e("ERROR", "Response failed")
+                    updateAmount(itemList)
+
+                    Log.i("MENU", "Get menu successful")
+                } else {
+                    Log.e("MENU", "Response failed")
+                }
+            } catch (e: Exception) {
+                Log.e("MENU", "Connection failed")
             }
+
         }
     }
 
@@ -48,5 +63,27 @@ class MenuViewModel : ViewModel() {
         _foodList.value = _wholeFoodList.filter { s -> regex.find(s.name.lowercase()) != null } as ArrayList<MenuItem>
         _drinkList.value = _wholeDrinkList.filter { s -> regex.find(s.name.lowercase()) != null } as ArrayList<MenuItem>
 
+    }
+
+    fun updateAmount(itemList: List<Item>) {
+        _wholeFoodList = _wholeFoodList.map { s ->
+            val itemInCarts = itemList.find {item -> item.name == s.name && item.price == s.price}
+            if (itemInCarts == null) {
+                MenuItem(s.name, s.description, s.currency, s.price, s.sold, s.type, 0)
+            } else {
+                MenuItem(s.name, s.description, s.currency, s.price, s.sold, s.type, itemInCarts.amount)
+            }
+        } as ArrayList<MenuItem>
+
+        _wholeDrinkList = _wholeDrinkList.map { s ->
+            val itemInCarts = itemList.find {item -> item.name == s.name && item.price == s.price}
+            if (itemInCarts == null) {
+                MenuItem(s.name, s.description, s.currency, s.price, s.sold, s.type, 0)
+            } else {
+                MenuItem(s.name, s.description, s.currency, s.price, s.sold, s.type, itemInCarts.amount)
+            }
+        } as ArrayList<MenuItem>
+
+        search()
     }
 }

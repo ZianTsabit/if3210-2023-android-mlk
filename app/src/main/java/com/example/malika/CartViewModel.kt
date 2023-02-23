@@ -43,4 +43,8 @@ class CartViewModel(application: Application): AndroidViewModel(application){
             repository.deleteAllItem()
         }
     }
+
+    fun getByNameAndPrice(nameQuery: String, priceQuery: Int) : Item? {
+        return repository.getByNameAndPrice(nameQuery, priceQuery)
+    }
 }

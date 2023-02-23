@@ -1,10 +1,15 @@
 package com.example.malika
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 
 class CartRepository(private val cartDao: CartDao) {
 
     val getAllItem: LiveData<List<Item>> = cartDao.getAllItem()
+
+    suspend fun getAllItemSynchronous(): List<Item> {
+        return cartDao.getAllItemSynchronous()
+    }
     suspend fun addItem(item: Item) {
         cartDao.addItem(item)
     }
@@ -23,6 +28,10 @@ class CartRepository(private val cartDao: CartDao) {
 
     fun getTotalPrice(): LiveData<Int> {
         return cartDao.getTotalPrice()
+    }
+
+    fun getByNameAndPrice(nameQuery: String, priceQuery: Int) : Item {
+        return cartDao.getByNameAndPrice(nameQuery, priceQuery)
     }
 
 }
