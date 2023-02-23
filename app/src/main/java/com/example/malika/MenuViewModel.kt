@@ -10,11 +10,14 @@ import kotlinx.coroutines.launch
 class MenuViewModel : ViewModel() {
     private val retrofitRepository: RetrofitRepository = RetrofitRepository()
 
-    private val _foodList = MutableLiveData(ArrayList<MenuItem>())
+    private var _wholeFoodList = ArrayList<MenuItem>()
+    private var _wholeDrinkList = ArrayList<MenuItem>()
+
+    private val _foodList = MutableLiveData(_wholeFoodList)
     val foodList: LiveData<ArrayList<MenuItem>>
         get() = _foodList
 
-    private val _drinkList = MutableLiveData(ArrayList<MenuItem>())
+    private val _drinkList = MutableLiveData(_wholeDrinkList)
     val drinkList: LiveData<ArrayList<MenuItem>>
         get() = _drinkList
 
@@ -25,12 +28,25 @@ class MenuViewModel : ViewModel() {
             val response = retrofitRepository.getMenu()
             if (response.isSuccessful) {
                 val list = response.body()?.data
+
+                _wholeFoodList = list?.filter { s -> s.type == "Food" } as ArrayList<MenuItem>
+                _wholeDrinkList = list?.filter { s -> s.type == "Drink" } as ArrayList<MenuItem>
+
                 _foodList.value = list?.filter { s -> s.type == "Food" } as ArrayList<MenuItem>
                 _drinkList.value  = list?.filter { s -> s.type == "Drink" } as ArrayList<MenuItem>
+
                 Log.i("MENU", "Get menu successful")
             } else {
                 Log.e("ERROR", "Response failed")
             }
         }
+    }
+
+    fun search() {
+        val regex = searchQuery.lowercase().toRegex()
+
+        _foodList.value = _wholeFoodList.filter { s -> regex.find(s.name.lowercase()) != null } as ArrayList<MenuItem>
+        _drinkList.value = _wholeDrinkList.filter { s -> regex.find(s.name.lowercase()) != null } as ArrayList<MenuItem>
+
     }
 }

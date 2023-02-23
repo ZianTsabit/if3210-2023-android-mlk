@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -57,6 +58,22 @@ class FoodFragment : Fragment() {
 
         viewModel.foodList.observe(viewLifecycleOwner, foodListUpdateObserver)
         viewModel.drinkList.observe(viewLifecycleOwner, drinkListUpdateObserver)
+
+        _binding!!.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                viewModel.searchQuery = newText
+                viewModel.search()
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                viewModel.searchQuery = query
+                viewModel.search()
+                return false
+            }
+
+        })
 
         viewModel.getMenu()
 
