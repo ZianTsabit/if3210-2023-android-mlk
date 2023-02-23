@@ -53,7 +53,8 @@ class MapFragment : Fragment() {
             BranchItem("Anchorage", "Swiss Chard", "12022 Town Park Circle", "Lady Destini Bechtelar", "397-110-6582", -149.5778193, 61.32927710000001),
         )
 
-        var adapter = BranchAdapter(list)
+        requireActivity()
+        var adapter = BranchAdapter(list, requireContext())
         adapter.notifyDataSetChanged()
         binding.branchRecyclerView.adapter = adapter
 
