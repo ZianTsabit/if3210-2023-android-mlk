@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/F7E1C9"
-    tools:context=".CodeScannerActivity"
+    tools:context=".ui.CodeScannerActivity"
     >
 
     <com.budiyev.android.codescanner.CodeScannerView

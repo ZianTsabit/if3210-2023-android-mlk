@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.malika.domain.BranchItem
+import com.example.malika.repository.RetrofitRepository
 import kotlinx.coroutines.launch
 
 class BranchViewModel : ViewModel() {

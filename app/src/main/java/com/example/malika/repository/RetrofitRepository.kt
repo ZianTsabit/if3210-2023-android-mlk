@@ -1,5 +1,8 @@
-package com.example.malika
+package com.example.malika.repository
 
+import com.example.malika.api.PaymentStatus
+import com.example.malika.api.BranchResponse
+import com.example.malika.api.MenuResponse
 import com.example.malika.api.RetrofitInstance
 import retrofit2.Response
 

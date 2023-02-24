@@ -1,4 +1,6 @@
-package com.example.malika
+package com.example.malika.ui
+
+import com.example.malika.domain.MenuItem
 
 interface OnMenuItemUpdateListener {
 

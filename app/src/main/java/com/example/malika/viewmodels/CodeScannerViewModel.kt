@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.malika.api.PaymentStatus
+import com.example.malika.repository.RetrofitRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response
 

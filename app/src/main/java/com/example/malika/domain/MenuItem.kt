@@ -1,4 +1,4 @@
-package com.example.malika
+package com.example.malika.domain
 
 import com.google.gson.annotations.SerializedName
 

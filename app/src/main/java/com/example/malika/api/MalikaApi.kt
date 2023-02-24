@@ -1,8 +1,5 @@
 package com.example.malika.api
 
-import com.example.malika.BranchResponse
-import com.example.malika.MenuResponse
-import com.example.malika.PaymentStatus
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST

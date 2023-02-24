@@ -1,4 +1,4 @@
-package com.example.malika
+package com.example.malika.api
 
 data class PaymentStatus(
     val status: String

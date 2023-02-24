@@ -1,30 +1,18 @@
-package com.example.malika
+package com.example.malika.ui
 
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
-import android.service.autofill.OnClickAction
 import android.util.Log
-import android.view.View
-import android.view.View.OnClickListener
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.malika.MainViewModel
+import com.example.malika.PageFragmentEnum
+import com.example.malika.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -50,7 +38,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         // Get an instance of the sensor service, and use that to get an instance of
         // a particular sensor.
-        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
         temperature = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
 
@@ -99,7 +87,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     viewModel.currentPage = PageFragmentEnum.Menu
 
                     if (temperature != null) {
-                        sensorManager.registerListener(this, temperature, SensorManager.SENSOR_DELAY_NORMAL)
+                        sensorManager.registerListener(this, temperature,
+                            SensorManager.SENSOR_DELAY_NORMAL
+                        )
                         headerFragment.unhideTemperature()
                     }
                 }

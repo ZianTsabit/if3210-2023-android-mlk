@@ -1,5 +1,6 @@
-package com.example.malika
+package com.example.malika.api
 
+import com.example.malika.domain.MenuItem
 import com.google.gson.annotations.SerializedName
 
 data class MenuResponse (

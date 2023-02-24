@@ -1,7 +1,8 @@
-package com.example.malika
+package com.example.malika.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
+import com.example.malika.database.CartDao
+import com.example.malika.database.Item
 
 class CartRepository(private val cartDao: CartDao) {
 

@@ -1,18 +1,20 @@
-package com.example.malika
+package com.example.malika.ui
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.malika.*
+import com.example.malika.adapters.MenuAdapter
+import com.example.malika.database.Item
 import com.example.malika.databinding.FragmentFoodBinding
-
+import com.example.malika.domain.MenuItem
 
 class FoodFragment : Fragment(), OnMenuItemUpdateListener {
     private lateinit var viewModel: MenuViewModel
@@ -84,7 +86,7 @@ class FoodFragment : Fragment(), OnMenuItemUpdateListener {
         })
 
         viewModel.getMenu()
-        
+
         return  binding.root
     }
 
@@ -102,7 +104,14 @@ class FoodFragment : Fragment(), OnMenuItemUpdateListener {
             Log.i("MENU", "findItem = $findItem")
 
             if (findItem != null) {
-                val updatedItem = findItem?.let { Item(it.id, it.name, item.price, it.amount.plus(1)) }
+                val updatedItem = findItem?.let {
+                    Item(
+                        it.id,
+                        it.name,
+                        item.price,
+                        it.amount.plus(1)
+                    )
+                }
                 mCartViewModel.updateItem(updatedItem as Item)
             }
         }
@@ -117,7 +126,14 @@ class FoodFragment : Fragment(), OnMenuItemUpdateListener {
             Log.i("MENU", "findItem = $findItem")
 
             if (findItem != null) {
-                val deletedItem = findItem?.let { Item(it.id, it.name, item.price, it.amount.minus(1)) }
+                val deletedItem = findItem?.let {
+                    Item(
+                        it.id,
+                        it.name,
+                        item.price,
+                        it.amount.minus(1)
+                    )
+                }
                 mCartViewModel.deleteItem(deletedItem as Item)
             }
 
@@ -129,7 +145,14 @@ class FoodFragment : Fragment(), OnMenuItemUpdateListener {
             Log.i("MENU", "findItem = $findItem")
 
             if (findItem != null) {
-                val updatedItem = findItem?.let { Item(it.id, it.name, item.price, it.amount.minus(1)) }
+                val updatedItem = findItem?.let {
+                    Item(
+                        it.id,
+                        it.name,
+                        item.price,
+                        it.amount.minus(1)
+                    )
+                }
                 mCartViewModel.updateItem(updatedItem as Item)
             }
         }

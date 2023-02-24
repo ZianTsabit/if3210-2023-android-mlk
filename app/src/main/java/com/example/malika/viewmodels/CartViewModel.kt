@@ -4,6 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.malika.database.AppDatabase
+import com.example.malika.database.Item
+import com.example.malika.repository.CartRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

@@ -1,6 +1,5 @@
-package com.example.malika
+package com.example.malika.adapters
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -10,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.malika.R
+import com.example.malika.domain.BranchItem
 
 class BranchAdapter(
     private var list: ArrayList<BranchItem>,

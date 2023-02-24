@@ -1,7 +1,9 @@
-package com.example.malika
+package com.example.malika.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.malika.CodeScannerViewModel
+import com.example.malika.repository.RetrofitRepository
 
 class CodeScannerViewModelFactory(private val repository: RetrofitRepository): ViewModelProvider.Factory {
 

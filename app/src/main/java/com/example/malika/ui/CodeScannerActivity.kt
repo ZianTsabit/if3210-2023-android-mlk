@@ -1,21 +1,25 @@
-package com.example.malika
+package com.example.malika.ui
 
-import android.R
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
-import android.nfc.Tag
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.budiyev.android.codescanner.*
+import androidx.lifecycle.Observer
+import com.budiyev.android.codescanner.AutoFocusMode
+import com.budiyev.android.codescanner.CodeScanner
+import com.budiyev.android.codescanner.DecodeCallback
+import com.budiyev.android.codescanner.ErrorCallback
+import com.budiyev.android.codescanner.ScanMode
+import com.example.malika.*
 import com.example.malika.databinding.ActivityCodeScannerBinding
-import kotlinx.coroutines.delay
+import com.example.malika.api.PaymentStatus
+import com.example.malika.repository.RetrofitRepository
+import com.example.malika.viewmodels.CodeScannerViewModelFactory
 import retrofit2.Response
 import java.util.*
 
@@ -61,7 +65,7 @@ class CodeScannerActivity : AppCompatActivity() {
                 if(newStatus.body()!!.status == "SUCCESS") {
                     binding.status.text = "Berhasil"
                     binding.status2.text = "Sudah dibayar"
-                    binding.imageView.setImageResource(com.example.malika.R.drawable.baseline_check_circle_24)
+                    binding.imageView.setImageResource(R.drawable.baseline_check_circle_24)
 
                     val task = object : TimerTask() {
                         override fun run() {
@@ -77,12 +81,12 @@ class CodeScannerActivity : AppCompatActivity() {
                 }else {
                     binding.status.text = "Gagal"
                     binding.status2.text = "Belum dibayar"
-                    binding.imageView.setImageResource(com.example.malika.R.drawable.baseline_cancel_24)
+                    binding.imageView.setImageResource(R.drawable.baseline_cancel_24)
                 }
             }else {
                 binding.status.text = "Gagal"
                 binding.status2.text = "Belum dibayar"
-                binding.imageView.setImageResource(com.example.malika.R.drawable.baseline_cancel_24)
+                binding.imageView.setImageResource(R.drawable.baseline_cancel_24)
             }
 
         }
@@ -133,7 +137,7 @@ class CodeScannerActivity : AppCompatActivity() {
     }
 
     private fun setPermission() {
-        val permission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+        val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         if(permission != PackageManager.PERMISSION_GRANTED) {
             makeReq()
         }
@@ -141,7 +145,7 @@ class CodeScannerActivity : AppCompatActivity() {
 
     private fun makeReq() {
         ActivityCompat.requestPermissions(
-            this, arrayOf(android.Manifest.permission.CAMERA), 101
+            this, arrayOf(Manifest.permission.CAMERA), 101
         )
     }
 

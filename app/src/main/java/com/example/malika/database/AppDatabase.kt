@@ -1,4 +1,4 @@
-package com.example.malika
+package com.example.malika.database
 
 import android.content.Context
 import androidx.room.Database

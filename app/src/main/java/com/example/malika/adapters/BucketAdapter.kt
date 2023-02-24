@@ -1,8 +1,10 @@
-package com.example.malika
+package com.example.malika.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.malika.ui.OnItemUpdateListener
+import com.example.malika.database.Item
 import com.example.malika.databinding.BucketRowBinding
 
 class BucketAdapter: RecyclerView.Adapter<BucketAdapter.CartViewHolder>() {

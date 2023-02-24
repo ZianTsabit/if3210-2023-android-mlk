@@ -1,6 +1,6 @@
-package com.example.malika
+package com.example.malika.ui
 
-import android.view.View
+import com.example.malika.database.Item
 
 interface OnItemUpdateListener {
 

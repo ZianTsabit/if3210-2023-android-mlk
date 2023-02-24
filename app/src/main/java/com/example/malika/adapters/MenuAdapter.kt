@@ -1,4 +1,4 @@
-package com.example.malika
+package com.example.malika.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.malika.ui.OnMenuItemUpdateListener
+import com.example.malika.R
+import com.example.malika.domain.MenuItem
 
 class MenuAdapter(
     private var list: ArrayList<MenuItem>

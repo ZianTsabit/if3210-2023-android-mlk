@@ -1,4 +1,4 @@
-package com.example.malika
+package com.example.malika.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

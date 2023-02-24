@@ -4,6 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.malika.database.AppDatabase
+import com.example.malika.database.Item
+import com.example.malika.domain.MenuItem
+import com.example.malika.repository.CartRepository
+import com.example.malika.repository.RetrofitRepository
 import kotlinx.coroutines.launch
 
 @SuppressLint("CheckResult")
