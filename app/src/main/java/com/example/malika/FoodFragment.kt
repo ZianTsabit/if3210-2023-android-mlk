@@ -67,7 +67,7 @@ class FoodFragment : Fragment(), OnMenuItemUpdateListener {
         viewModel.foodList.observe(viewLifecycleOwner, foodListUpdateObserver)
         viewModel.drinkList.observe(viewLifecycleOwner, drinkListUpdateObserver)
 
-        _binding!!.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        _binding!!.searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 viewModel.searchQuery = newText
