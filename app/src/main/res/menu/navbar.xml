@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="Camera"
+        android:title="Twibbon"
         android:id="@+id/camera"
         android:icon="@drawable/camera_selector"/>
     <item
-        android:title="Maps"
+        android:title="Cabang Restoran"
         android:id="@+id/map"
         android:icon="@drawable/map_selector"/>
     <item
-        android:title="Food"
+        android:title="Menu"
         android:id="@+id/food"
         android:icon="@drawable/food_selector"/>
     <item
-        android:title="Bucket"
+        android:title="Keranjang"
         android:id="@+id/bucket"
         android:icon="@drawable/bucket_selector"/>
 </menu>

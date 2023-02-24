@@ -22,6 +22,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         }
 
         replaceFragment(R.id.frame_header, headerFragment)
-
+        bottomNavigationView.menu.getItem(2).setChecked(true)
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.camera -> {

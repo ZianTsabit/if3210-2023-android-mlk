@@ -10,5 +10,5 @@ enum class PageFragmentEnum {
 }
 
 class MainViewModel : ViewModel() {
-    var currentPage : PageFragmentEnum = PageFragmentEnum.Twibbon
+    var currentPage : PageFragmentEnum = PageFragmentEnum.Menu
 }
