@@ -25,6 +25,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
     private val headerFragment = HeaderFragment()
@@ -51,12 +53,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         temperature = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
 
-        if (temperature == null) {
-            Log.e("SENSOR", "Sensor.TYPE_AMBIENT_TEMPERATURE is not available on your device")
-        } else {
-            sensorManager.registerListener(this, temperature, SensorManager.SENSOR_DELAY_NORMAL)
-        }
-
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
         if (viewModel.currentPage == PageFragmentEnum.Twibbon) {
@@ -66,6 +62,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             replaceFragment(R.id.frame_layout, mapFragment)
 
         } else if (viewModel.currentPage == PageFragmentEnum.Menu) {
+            if (temperature == null) {
+                Log.e("SENSOR", "Sensor.TYPE_AMBIENT_TEMPERATURE is not available on your device")
+            } else {
+                sensorManager.registerListener(this, temperature, SensorManager.SENSOR_DELAY_NORMAL)
+            }
             replaceFragment(R.id.frame_layout, foodFragment)
 
         } else if (viewModel.currentPage == PageFragmentEnum.Cart) {
@@ -82,12 +83,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     viewModel.currentPage = PageFragmentEnum.Twibbon
                     headerFragment.changeTitle("Twibbon")
                     headerFragment.hideTemperature()
+                    sensorManager.unregisterListener(this)
                 }
                 R.id.map -> {
                     replaceFragment(R.id.frame_layout, mapFragment)
                     viewModel.currentPage = PageFragmentEnum.Branch
                     headerFragment.changeTitle("Cabang Restoran")
                     headerFragment.hideTemperature()
+                    sensorManager.unregisterListener(this)
                 }
                 R.id.food -> {
                     replaceFragment(R.id.frame_layout, foodFragment)
@@ -95,6 +98,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     viewModel.currentPage = PageFragmentEnum.Menu
 
                     if (temperature != null) {
+                        sensorManager.registerListener(this, temperature, SensorManager.SENSOR_DELAY_NORMAL)
                         headerFragment.unhideTemperature()
                     }
                 }
@@ -103,6 +107,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     viewModel.currentPage = PageFragmentEnum.Cart
                     headerFragment.changeTitle("Keranjang")
                     headerFragment.hideTemperature()
+                    sensorManager.unregisterListener(this)
                 }
             }
             true
@@ -143,10 +148,13 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onSensorChanged(event: SensorEvent) {
         val celciusOfTemperature = event.values[0]
-        headerFragment.setTemperature("$celciusOfTemperature°C")
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.HALF_UP
+        val roundOff = df.format(celciusOfTemperature)
+        headerFragment.setTemperature("$roundOff°C")
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-//        TODO("Not yet implemented")
+
     }
 }
