@@ -21,7 +21,7 @@
 
 ## How to Run and Build?
 
-1. Buka porject ini pada Android Studio
+1. Buka project ini pada Android Studio
 2. Jalankan executable backend pada komputer Anda
 3. Ganti base-url pada file ``` api/RetrofitInstance.kt ``` dengan ip address host device Anda
 4. Jalankan aplikasi menggunakan device smartphone Anda melalui USB atau Emulator

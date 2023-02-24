@@ -42,7 +42,7 @@ class BucketFragment : Fragment(), OnItemUpdateListener {
             if(newTotal === null) {
                 binding.totalPrice.text = "Total: 0"
             }else {
-                binding.totalPrice.text = "Total: Rp$newTotal"
+                binding.totalPrice.text = "Total: IDR $newTotal"
             }
         }
 

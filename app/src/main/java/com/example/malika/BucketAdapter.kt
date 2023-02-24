@@ -13,7 +13,7 @@ class BucketAdapter: RecyclerView.Adapter<BucketAdapter.CartViewHolder>() {
     class CartViewHolder(private val itemBinding: BucketRowBinding, private val onItemUpdateListener: OnItemUpdateListener): RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(item: Item){
             itemBinding.itemName.text = item.name
-            itemBinding.itemPrice.text = "Rp " + item.price.toString()
+            itemBinding.itemPrice.text = "IDR " + item.price.toString()
             itemBinding.itemQuantity.text = item.amount.toString()
 
             itemBinding.plusButton.setOnClickListener {
