@@ -57,6 +57,7 @@ class BranchAdapter(
 
     fun updateBranchList(branchList: ArrayList<BranchItem>) {
         list.clear()
+        branchList.sortBy { it.name }
         list = branchList
         notifyDataSetChanged()
     }
