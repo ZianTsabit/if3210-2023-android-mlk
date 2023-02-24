@@ -44,7 +44,7 @@ Majika adalah sebuah aplikasi mobile yang dibuat dengan menggunakan platform and
 
 ### Fitur Cabang Restoran
 
-![SS7](./resource/cabang_restoran.png)
+![SS7](./resource/cabang_restoran.jpg)
 
 ### Fitur Keranjang
 
